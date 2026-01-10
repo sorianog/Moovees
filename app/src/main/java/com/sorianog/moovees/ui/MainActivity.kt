@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.sorianog.moovees.BuildConfig
 import com.sorianog.moovees.ui.navigation.AppNavGraph
 import com.sorianog.moovees.ui.theme.MooveesTheme
 
