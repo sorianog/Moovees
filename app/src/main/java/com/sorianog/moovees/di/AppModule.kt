@@ -1,9 +1,11 @@
 package com.sorianog.moovees.di
 
-import android.R.attr.apiKey
 import com.sorianog.moovees.BuildConfig
+import com.sorianog.moovees.data.MovieRepository
 import com.sorianog.moovees.data.api.ApiConstants
 import com.sorianog.moovees.data.api.TMDBApiService
+import com.sorianog.moovees.data.source.MovieDataSource
+import com.sorianog.moovees.data.source.MovieDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,8 +14,8 @@ import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.Request
+import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Singleton
@@ -44,7 +46,6 @@ class AppModule {
             .addConverterFactory(Json {
                 ignoreUnknownKeys = true
             }.asConverterFactory("application/json".toMediaType()))
-
             .build()
     }
 
@@ -52,5 +53,17 @@ class AppModule {
     @Singleton
     fun providesApiService(retrofit: Retrofit): TMDBApiService {
         return retrofit.create(TMDBApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesMovieDataSource(apiService: TMDBApiService): MovieDataSource {
+        return MovieDataSourceImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun providesMovieRepository(movieDataSource: MovieDataSource): MovieRepository {
+        return MovieRepository(movieDataSource)
     }
 }

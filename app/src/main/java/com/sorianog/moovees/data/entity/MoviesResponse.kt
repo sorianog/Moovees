@@ -20,11 +20,11 @@ data class MovieModel(
 //    @SerialName("genre_ids") var genreIds: List<Int> = listOf(),
 //    @SerialName("original_language") var originalLanguage: String? = null,
 //    @SerialName("original_title") var originalTitle: String? = null,
+    @SerialName("title") var title: String? = null,
     @SerialName("overview") var overview: String? = null,
 //    @SerialName("popularity") var popularity: Double? = null,
     @SerialName("poster_path") var posterPath: String? = null,
     @SerialName("release_date") var releaseDate: String? = null,
-    @SerialName("title") var title: String? = null,
 //    @SerialName("video") var video: Boolean? = null,
 //    @SerialName("vote_average") var voteAverage: Double? = null,
 //    @SerialName("vote_count") var voteCount: Int? = null
