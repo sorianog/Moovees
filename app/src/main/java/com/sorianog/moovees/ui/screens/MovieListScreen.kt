@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.sorianog.moovees.data.api.ApiState
+import com.sorianog.moovees.ui.components.MovieList
 import com.sorianog.moovees.ui.viewmodels.MovieListViewModel
 
 @Composable
@@ -21,7 +22,7 @@ fun MovieListScreen(
         is ApiState.Success<*> -> {
             val movieData = (movieDataState as ApiState.Success).data
             if (movieData.results.isNotEmpty()) {
-                println("### ${movieData.results}")
+                MovieList(movieData.results)
             } else {
                 // TODO: Display empty message
             }

@@ -14,7 +14,7 @@ data class MoviesResponse(
 
 @Serializable
 data class MovieModel(
-    @SerialName("id") var id: Int? = null,
+    @SerialName("id") var id: Int,
 //    @SerialName("adult") var adult: Boolean? = null,
 //    @SerialName("backdrop_path") var backdropPath: String? = null,
 //    @SerialName("genre_ids") var genreIds: List<Int> = listOf(),
