@@ -3,8 +3,13 @@ package com.sorianog.moovees.ui.screens
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.sorianog.moovees.R
 import com.sorianog.moovees.data.api.ApiState
+import com.sorianog.moovees.ui.components.EmptyStateUI
+import com.sorianog.moovees.ui.components.LoadingIndicator
 import com.sorianog.moovees.ui.components.MovieList
 import com.sorianog.moovees.ui.viewmodels.MovieListViewModel
 
@@ -16,7 +21,7 @@ fun MovieListScreen(
 
     when (movieDataState) {
         is ApiState.Loading<*> -> {
-            // TODO: Display loading component
+            LoadingIndicator()
         }
 
         is ApiState.Success<*> -> {
@@ -24,14 +29,19 @@ fun MovieListScreen(
             if (movieData.results.isNotEmpty()) {
                 MovieList(movieData.results)
             } else {
-                // TODO: Display empty message
+                EmptyStateUI(
+                    image = painterResource(R.drawable.ic_info),
+                    message = stringResource(R.string.no_movies)
+                )
             }
         }
 
         is ApiState.Error<*> -> {
-            // TODO: Display error component
             val error = (movieDataState as ApiState.Error).error
-            println("### error: $error")
+            EmptyStateUI(
+                image = painterResource(R.drawable.ic_error),
+                message = error.toString()
+            )
         }
     }
 }

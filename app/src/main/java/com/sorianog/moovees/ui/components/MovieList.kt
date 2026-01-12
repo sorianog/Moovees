@@ -92,7 +92,7 @@ private fun MovieDate(date: String?) {
 private fun MoviePoster(posterPath: String?) {
     if (!posterPath.isNullOrBlank()) {
         AsyncImage(
-            modifier = Modifier.height(100.dp),
+            modifier = Modifier.height(200.dp),
             model = "${ApiConstants.IMG_SMALL_BASE_URL}${posterPath}",
             contentDescription = stringResource(R.string.movie_poster),
             placeholder = painterResource(R.drawable.photo_img),
