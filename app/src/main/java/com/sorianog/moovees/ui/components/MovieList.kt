@@ -1,9 +1,7 @@
 package com.sorianog.moovees.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,14 +11,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
 import com.sorianog.moovees.R
-import com.sorianog.moovees.data.api.ApiConstants
 import com.sorianog.moovees.data.entity.MovieModel
 
 @Composable
@@ -58,7 +53,7 @@ fun MovieListItem(
 }
 
 @Composable
-private fun MovieTitle(title: String?) {
+fun MovieTitle(title: String?) {
     Text(
         text = title ?: stringResource(R.string.no_title),
         style = MaterialTheme.typography.titleLarge,
@@ -84,24 +79,6 @@ private fun MovieDate(date: String?) {
         Text(
             text = stringResource(R.string.movie_date, date),
             fontWeight = FontWeight.SemiBold
-        )
-    }
-}
-
-@Composable
-private fun MoviePoster(posterPath: String?) {
-    if (!posterPath.isNullOrBlank()) {
-        AsyncImage(
-            modifier = Modifier.height(200.dp),
-            model = "${ApiConstants.IMG_SMALL_BASE_URL}${posterPath}",
-            contentDescription = stringResource(R.string.movie_poster),
-            placeholder = painterResource(R.drawable.photo_img),
-            error = painterResource(R.drawable.photo_img)
-        )
-    } else {
-        Image(
-            painterResource(R.drawable.photo_img),
-            contentDescription = stringResource(R.string.movie_poster)
         )
     }
 }
