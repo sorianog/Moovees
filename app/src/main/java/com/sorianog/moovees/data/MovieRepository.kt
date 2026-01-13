@@ -1,6 +1,7 @@
 package com.sorianog.moovees.data
 
 import com.sorianog.moovees.data.api.ApiState
+import com.sorianog.moovees.data.entity.MovieDetailModel
 import com.sorianog.moovees.data.entity.MoviesResponse
 import com.sorianog.moovees.data.source.MovieDataSource
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +26,23 @@ class MovieRepository @Inject constructor(
             }
         }.catch { err ->
             emit(ApiState.Error(err.localizedMessage ?: "Error in movie flow occurred"))
+        }
+    }
+
+    fun getMovie(movieId: Int): Flow<ApiState<MovieDetailModel>> {
+
+        return flow {
+            emit(ApiState.Loading())
+
+            val response = movieDataSource.getMovie(movieId)
+
+            if (response.isSuccessful && response.body() != null) {
+                emit(ApiState.Success(response.body()!!))
+            } else {
+                emit(ApiState.Error("Error fetching movie details: ${response.code()}"))
+            }
+        }.catch { err ->
+            emit(ApiState.Error(err.localizedMessage ?: "Error in movie details flow occurred"))
         }
     }
 }

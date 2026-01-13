@@ -4,6 +4,7 @@
     <string name="no_desc">No description</string>
     <string name="movie_date">Release Date: %1$s</string>
     <string name="movie_poster">Movie poster</string>
+    <string name="movie_backdrop">Movie backdrop</string>
     <string name="no_movies">There are no movies to show</string>
     <string name="list">List</string>
     <string name="grid">Grid</string>

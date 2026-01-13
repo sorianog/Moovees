@@ -1,5 +1,6 @@
 package com.sorianog.moovees.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,11 +21,12 @@ import com.sorianog.moovees.data.entity.MovieModel
 
 @Composable
 fun MovieList(
-    movieList: List<MovieModel>
+    movieList: List<MovieModel>,
+    onMovieClick: (Int) -> Unit
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(movieList, key = { movie -> movie.id }) { movie ->
-            MovieListItem(movie)
+            MovieListItem(movie, onMovieClick)
         }
     }
 }
@@ -32,10 +34,14 @@ fun MovieList(
 @Composable
 fun MovieListItem(
     movie: MovieModel,
+    onMovieClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     HorizontalDivider()
     ListItem(
+        modifier = modifier.clickable {
+            onMovieClick(movie.id)
+        },
         leadingContent = {
             MoviePoster(movie.posterPath)
         },

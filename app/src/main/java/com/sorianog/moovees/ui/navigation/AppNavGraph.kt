@@ -15,15 +15,30 @@ fun AppNavGraph(
     NavHost(navController = navController, startDestination = AppRoutes.LIST_SCREEN) {
 
         composable(AppRoutes.LIST_SCREEN) {
-            MovieListScreen()
+            MovieListScreen(
+                onMovieClick = { movieId ->
+                    navController.navigateToMovieDetail(movieId)
+                }
+            )
         }
 
         composable(AppRoutes.GRID_SCREEN) {
             MovieGridScreen()
         }
 
-        composable(AppRoutes.DETAIL_SCREEN) {
-            MovieDetailScreen()
+        composable(
+            route = MovieDetailNav.routeWithArgs,
+            arguments = MovieDetailNav.arguments
+        ) { navBackStackEntry ->
+            val movieId = navBackStackEntry.arguments?.getInt(MovieDetailNav.movieIdArg)
+            MovieDetailScreen(movieId)
         }
     }
+}
+
+fun NavHostController.navigateSingleTopTo(route: String) =
+    this.navigate(route) { launchSingleTop = true }
+
+private fun NavHostController.navigateToMovieDetail(movieId: Int) {
+    this.navigateSingleTopTo("${MovieDetailNav.route}/$movieId")
 }

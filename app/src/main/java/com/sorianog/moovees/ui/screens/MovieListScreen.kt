@@ -15,7 +15,8 @@ import com.sorianog.moovees.ui.viewmodels.MovieListViewModel
 
 @Composable
 fun MovieListScreen(
-    movieListViewModel: MovieListViewModel = hiltViewModel()
+    movieListViewModel: MovieListViewModel = hiltViewModel(),
+    onMovieClick: (Int) -> Unit
 ) {
     val movieDataState by movieListViewModel.movieState.collectAsState()
 
@@ -27,7 +28,7 @@ fun MovieListScreen(
         is ApiState.Success<*> -> {
             val movieData = (movieDataState as ApiState.Success).data
             if (movieData.results.isNotEmpty()) {
-                MovieList(movieData.results)
+                MovieList(movieData.results, onMovieClick)
             } else {
                 EmptyStateUI(
                     image = painterResource(R.drawable.ic_info),
