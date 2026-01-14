@@ -8,5 +8,7 @@ data class MovieDetailModel(
     var title: String? = null,
     var overview: String? = null,
     @SerialName("release_date") var releaseDate: String? = null,
-    @SerialName("backdrop_path") var backdropPath: String? = null
+    @SerialName("backdrop_path") var backdropPath: String? = null,
+    var runtime: Int?,
+    var homepage: String?
 )
