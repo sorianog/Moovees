@@ -31,11 +31,11 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.sorianog.moovees.R
 import com.sorianog.moovees.data.api.ApiConstants
-import com.sorianog.moovees.data.entity.MovieDetailModel
+import com.sorianog.moovees.data.entity.MovieModelLocal
 
 @Composable
 fun MovieDetail(
-    movieDetail: MovieDetailModel,
+    movieDetail: MovieModelLocal,
     modifier: Modifier = Modifier
 ) {
     Column(

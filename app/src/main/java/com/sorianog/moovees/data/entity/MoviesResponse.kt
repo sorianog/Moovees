@@ -37,7 +37,7 @@ fun MovieModel.toLocal(): MovieModelLocal {
         releaseDate = this.releaseDate,
         backdropPath = this.backdropPath,
         posterPath = this.posterPath,
-        runtime = 0,
+        runtime = null,
         homepage = "",
         marked = false,
         markedOn = ""

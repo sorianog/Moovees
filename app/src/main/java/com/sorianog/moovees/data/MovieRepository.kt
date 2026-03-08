@@ -1,7 +1,6 @@
 package com.sorianog.moovees.data
 
 import com.sorianog.moovees.data.api.DataState
-import com.sorianog.moovees.data.entity.MovieDetailModel
 import com.sorianog.moovees.data.entity.MovieModelLocal
 import com.sorianog.moovees.data.entity.toLocal
 import com.sorianog.moovees.data.source.MovieDataSourceLocal
@@ -42,17 +41,28 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    fun getMovie(movieId: Int): Flow<DataState<MovieDetailModel>> {
+    fun getMovie(movieId: Int): Flow<DataState<MovieModelLocal>> {
 
         return flow {
             emit(DataState.Loading())
 
-            val response = movieDataSourceRemote.getMovie(movieId)
-
-            if (response.isSuccessful && response.body() != null) {
-                emit(DataState.Success(response.body()!!))
+            var movie = getMovieLocal(movieId)
+            if (movie.runtime == null) {
+                val response = movieDataSourceRemote.getMovie(movieId)
+                if (response.isSuccessful && response.body() != null) {
+                    response.body()?.let { movieDetail ->
+                        movie = movie.copy(
+                            runtime = movieDetail.runtime,
+                            homepage = movieDetail.homepage
+                        )
+                        updateMovie(movie)
+                        emit(DataState.Success(movie))
+                    }
+                } else {
+                    emit(DataState.Error("Error fetching movie details: ${response.code()}"))
+                }
             } else {
-                emit(DataState.Error("Error fetching movie details: ${response.code()}"))
+                emit(DataState.Success(movie))
             }
         }.catch { err ->
             emit(DataState.Error(err.localizedMessage ?: "Error in movie details flow occurred"))
@@ -65,5 +75,13 @@ class MovieRepository @Inject constructor(
 
     suspend fun getMoviesLocal(): List<MovieModelLocal> {
         return movieDataSourceLocal.getMovies()
+    }
+
+    suspend fun getMovieLocal(id: Int): MovieModelLocal {
+        return movieDataSourceLocal.getMovie(id)
+    }
+
+    suspend fun updateMovie(movie: MovieModelLocal) {
+        movieDataSourceLocal.updateMovie(movie)
     }
 }
