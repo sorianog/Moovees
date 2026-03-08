@@ -7,5 +7,6 @@ interface MovieDataSourceLocal {
     suspend fun getMovie(movieId: Int): MovieModelLocal
     suspend fun insertMovies(movies: List<MovieModelLocal>)
     suspend fun updateMovie(movie: MovieModelLocal)
+    fun markMovie(movieId: Int, marked: Boolean, markedOn: String)
     suspend fun deleteAllMovies()
 }

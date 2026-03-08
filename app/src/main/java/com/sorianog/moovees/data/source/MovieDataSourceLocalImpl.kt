@@ -23,6 +23,10 @@ class MovieDataSourceLocalImpl @Inject constructor(
         movieDao.updateMovie(movie)
     }
 
+    override fun markMovie(movieId: Int, marked: Boolean, markedOn: String) {
+        movieDao.updateMovie(movieId, marked, markedOn)
+    }
+
     override suspend fun deleteAllMovies() {
         movieDao.deleteAllMovies()
     }

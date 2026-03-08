@@ -69,6 +69,10 @@ class MovieRepository @Inject constructor(
         }
     }
 
+    fun markMovie(movieId: Int, marked: Boolean, markedOn: String) {
+        movieDataSourceLocal.markMovie(movieId, marked, markedOn)
+    }
+
     suspend fun storeMovies(movies: List<MovieModelLocal>) {
         movieDataSourceLocal.insertMovies(movies)
     }

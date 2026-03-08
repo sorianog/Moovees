@@ -21,6 +21,9 @@ interface MovieDao {
     @Update
     suspend fun updateMovie(movie: MovieModelLocal)
 
+    @Query("UPDATE movie SET marked = :marked, markedOn = :markedOn WHERE id = :id")
+    fun updateMovie(id: Int, marked: Boolean, markedOn: String)
+
     @Query("DELETE FROM movie")
     fun deleteAllMovies()
 }

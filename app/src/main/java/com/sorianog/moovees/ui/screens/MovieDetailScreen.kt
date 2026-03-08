@@ -33,7 +33,7 @@ fun MovieDetailScreen(
 
         is DataState.Success<*> -> {
             val movieDetail = (movieDetailState as DataState.Success).data
-            MovieDetail(movieDetail)
+            MovieDetail(movieDetail, movieDetailViewModel::markMovie)
         }
 
         is DataState.Error<*> -> {
