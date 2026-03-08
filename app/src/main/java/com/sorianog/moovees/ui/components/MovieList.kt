@@ -17,11 +17,11 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.sorianog.moovees.R
-import com.sorianog.moovees.data.entity.MovieModel
+import com.sorianog.moovees.data.entity.MovieModelLocal
 
 @Composable
 fun MovieList(
-    movieList: List<MovieModel>,
+    movieList: List<MovieModelLocal>,
     onMovieClick: (Int) -> Unit
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -33,7 +33,7 @@ fun MovieList(
 
 @Composable
 fun MovieListItem(
-    movie: MovieModel,
+    movie: MovieModelLocal,
     onMovieClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {

@@ -4,8 +4,11 @@ import com.sorianog.moovees.BuildConfig
 import com.sorianog.moovees.data.MovieRepository
 import com.sorianog.moovees.data.api.ApiConstants
 import com.sorianog.moovees.data.api.TMDBApiService
-import com.sorianog.moovees.data.source.MovieDataSource
-import com.sorianog.moovees.data.source.MovieDataSourceImpl
+import com.sorianog.moovees.data.local.MovieDao
+import com.sorianog.moovees.data.source.MovieDataSourceLocal
+import com.sorianog.moovees.data.source.MovieDataSourceLocalImpl
+import com.sorianog.moovees.data.source.MovieDataSourceRemote
+import com.sorianog.moovees.data.source.MovieDataSourceRemoteImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,6 +26,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
+
+    private val json = Json {
+        ignoreUnknownKeys = true
+    }
 
     @Provides
     @Singleton
@@ -43,9 +50,9 @@ class AppModule {
         return Retrofit.Builder()
             .baseUrl(ApiConstants.API_BASE_URL)
             .client(okHttpClient.build())
-            .addConverterFactory(Json {
-                ignoreUnknownKeys = true
-            }.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(
+                json.asConverterFactory("application/json".toMediaType())
+            )
             .build()
     }
 
@@ -57,13 +64,22 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providesMovieDataSource(apiService: TMDBApiService): MovieDataSource {
-        return MovieDataSourceImpl(apiService)
+    fun providesMovieDataSource(apiService: TMDBApiService): MovieDataSourceRemote {
+        return MovieDataSourceRemoteImpl(apiService)
     }
 
     @Provides
     @Singleton
-    fun providesMovieRepository(movieDataSource: MovieDataSource): MovieRepository {
-        return MovieRepository(movieDataSource)
+    fun providesMovieDataSourceLocal(movieDao: MovieDao): MovieDataSourceLocal {
+        return MovieDataSourceLocalImpl(movieDao)
+    }
+
+    @Provides
+    @Singleton
+    fun providesMovieRepository(
+        movieDataSourceRemote: MovieDataSourceRemote,
+        movieDataSourceLocal: MovieDataSourceLocal
+    ): MovieRepository {
+        return MovieRepository(movieDataSourceRemote, movieDataSourceLocal)
     }
 }

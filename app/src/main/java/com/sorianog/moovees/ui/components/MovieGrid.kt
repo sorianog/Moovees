@@ -19,11 +19,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.sorianog.moovees.R
-import com.sorianog.moovees.data.entity.MovieModel
+import com.sorianog.moovees.data.entity.MovieModelLocal
 
 @Composable
 fun MovieGrid(
-    movies: List<MovieModel>
+    movies: List<MovieModelLocal>
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2)
@@ -36,7 +36,7 @@ fun MovieGrid(
 
 @Composable
 fun MovieGridItem(
-    movie: MovieModel
+    movie: MovieModelLocal
 ) {
     Column(
         modifier = Modifier.padding(6.dp),

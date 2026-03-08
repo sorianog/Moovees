@@ -7,9 +7,9 @@ import retrofit2.Response
 import javax.inject.Inject
 
 
-class MovieDataSourceImpl @Inject constructor(
+class MovieDataSourceRemoteImpl @Inject constructor(
     private val apiService: TMDBApiService
-) : MovieDataSource {
+) : MovieDataSourceRemote {
     override suspend fun getMovies(): Response<MoviesResponse> {
         return apiService.getMovies()
     }

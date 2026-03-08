@@ -2,7 +2,6 @@ package com.sorianog.moovees.data.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.util.ArrayList
 
 @Serializable
 data class MoviesResponse(
@@ -16,7 +15,7 @@ data class MoviesResponse(
 data class MovieModel(
     @SerialName("id") var id: Int,
 //    @SerialName("adult") var adult: Boolean? = null,
-//    @SerialName("backdrop_path") var backdropPath: String? = null,
+    @SerialName("backdrop_path") var backdropPath: String? = null,
 //    @SerialName("genre_ids") var genreIds: List<Int> = listOf(),
 //    @SerialName("original_language") var originalLanguage: String? = null,
 //    @SerialName("original_title") var originalTitle: String? = null,
@@ -29,3 +28,18 @@ data class MovieModel(
 //    @SerialName("vote_average") var voteAverage: Double? = null,
 //    @SerialName("vote_count") var voteCount: Int? = null
 )
+
+fun MovieModel.toLocal(): MovieModelLocal {
+    return MovieModelLocal(
+        id = this.id,
+        title = this.title,
+        overview = this.overview,
+        releaseDate = this.releaseDate,
+        backdropPath = this.backdropPath,
+        posterPath = this.posterPath,
+        runtime = 0,
+        homepage = "",
+        marked = false,
+        markedOn = ""
+    )
+}

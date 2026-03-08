@@ -7,7 +7,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sorianog.moovees.R
-import com.sorianog.moovees.data.api.ApiState
+import com.sorianog.moovees.data.api.DataState
 import com.sorianog.moovees.ui.components.EmptyStateUI
 import com.sorianog.moovees.ui.components.LoadingIndicator
 import com.sorianog.moovees.ui.components.MovieDetail
@@ -27,17 +27,17 @@ fun MovieDetailScreen(
     }
 
     when (movieDetailState) {
-        is ApiState.Loading<*> -> {
+        is DataState.Loading<*> -> {
             LoadingIndicator()
         }
 
-        is ApiState.Success<*> -> {
-            val movieDetail = (movieDetailState as ApiState.Success).data
+        is DataState.Success<*> -> {
+            val movieDetail = (movieDetailState as DataState.Success).data
             MovieDetail(movieDetail)
         }
 
-        is ApiState.Error<*> -> {
-            val error = (movieDetailState as ApiState.Error).error
+        is DataState.Error<*> -> {
+            val error = (movieDetailState as DataState.Error).error
             EmptyStateUI(
                 image = painterResource(R.drawable.ic_error),
                 message = error.toString()

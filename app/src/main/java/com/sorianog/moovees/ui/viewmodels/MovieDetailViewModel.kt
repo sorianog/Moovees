@@ -3,7 +3,7 @@ package com.sorianog.moovees.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sorianog.moovees.data.MovieRepository
-import com.sorianog.moovees.data.api.ApiState
+import com.sorianog.moovees.data.api.DataState
 import com.sorianog.moovees.data.entity.MovieDetailModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,9 +18,9 @@ import javax.inject.Inject
 class MovieDetailViewModel @Inject constructor(
     private val movieRepository: MovieRepository
 ) : ViewModel() {
-    private val _movieDetailState: MutableStateFlow<ApiState<MovieDetailModel>> =
-        MutableStateFlow(ApiState.Loading())
-    val movieDetailState: StateFlow<ApiState<MovieDetailModel>> = _movieDetailState
+    private val _movieDetailState: MutableStateFlow<DataState<MovieDetailModel>> =
+        MutableStateFlow(DataState.Loading())
+    val movieDetailState: StateFlow<DataState<MovieDetailModel>> = _movieDetailState
 
     fun getMovieDetail(movieId: Int) {
         viewModelScope.launch(Dispatchers.IO) {

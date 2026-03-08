@@ -7,7 +7,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.sorianog.moovees.R
-import com.sorianog.moovees.data.api.ApiState
+import com.sorianog.moovees.data.api.DataState
 import com.sorianog.moovees.ui.components.EmptyStateUI
 import com.sorianog.moovees.ui.components.LoadingIndicator
 import com.sorianog.moovees.ui.components.MovieGrid
@@ -20,14 +20,14 @@ fun MovieGridScreen(
     val movieDataState by movieListViewModel.movieState.collectAsState()
 
     when (movieDataState) {
-        is ApiState.Loading<*> -> {
+        is DataState.Loading<*> -> {
             LoadingIndicator()
         }
 
-        is ApiState.Success<*> -> {
-            val movieData = (movieDataState as ApiState.Success).data
-            if (movieData.results.isNotEmpty()) {
-                MovieGrid(movieData.results)
+        is DataState.Success<*> -> {
+            val movieData = (movieDataState as DataState.Success).data
+            if (movieData.isNotEmpty()) {
+                MovieGrid(movieData)
             } else {
                 EmptyStateUI(
                     image = painterResource(R.drawable.ic_info),
@@ -36,8 +36,8 @@ fun MovieGridScreen(
             }
         }
 
-        is ApiState.Error<*> -> {
-            val error = (movieDataState as ApiState.Error).error
+        is DataState.Error<*> -> {
+            val error = (movieDataState as DataState.Error).error
             EmptyStateUI(
                 image = painterResource(R.drawable.ic_error),
                 message = error.toString()
